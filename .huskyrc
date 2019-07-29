@@ -1,0 +1,6 @@
+{
+  hooks: {
+    'commit-msg': 'npm run commit -- -E HUSKY_GIT_PARAMS',
+    'pre-push': 'npm test && gatsby build',
+  },
+}

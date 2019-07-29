@@ -2,14 +2,18 @@
   "name": "docs",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "start": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
+    "postinstall": "run-s test build",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "commit": "commitlint",
+    "test": "run-s test:lint",
+    "test:eslint": "eslint 'src/**' --color --fix",
+    "test:lint": "run-s test:stylelint test:eslint",
+    "test:stylelint": "stylelint 'src/**' --color --fix",
+    "test:unit": ""
   },
   "dependencies": {
-    "@danbruegge/gatsby-plugin-stylelint": "^3.4.0",
     "gatsby": "^2.13.36",
     "gatsby-image": "^2.2.6",
     "gatsby-plugin-manifest": "^2.2.4",
@@ -24,19 +28,28 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1",
-    "stylelint": "^10.1.0"
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@danbruegge/gatsby-plugin-stylelint": "^3.4.0",
     "babel-eslint": "^10.0.2",
+    "console-success": "0.0.3",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
     "gatsby-plugin-eslint": "^2.0.5",
     "gatsby-plugin-stylelint": "^3.2.0",
+    "husky": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "please-upgrade-node": "^3.1.1",
     "prettier": "^1.18.2",
-    "stylelint-prettier": "^1.1.1"
+    "signale": "^1.4.0",
+    "stylelint": "^10.1.0",
+    "stylelint-prettier": "^1.1.1",
+    "yargs": "^13.3.0"
   },
   "repository": {
     "type": "git",
