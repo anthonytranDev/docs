@@ -1,0 +1,17 @@
+{
+  "scss-class": {
+    "scope": "scss",
+    "prefix": "scss-class",
+    "body": [
+      ".${1:class-name} {",
+      "  ${2:attribute-name}: ${3:attribute-value};",
+      "\t$0",
+      "}"
+    ]
+  },
+  "scss-attribute": {
+    "scope": "scss-attribute",
+    "prefix": "scss-attribute",
+    "body": ["${1:attribute-name}: ${2:attribute-value};"]
+  }
+}
