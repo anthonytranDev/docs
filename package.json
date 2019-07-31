@@ -3,17 +3,18 @@
   "scripts": {
     "build": "gatsby build",
     "start": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
     "postinstall": "run-s test build",
     "serve": "gatsby serve",
     "commit": "commitlint",
-    "test": "run-s test:lint",
+    "test": "run-s test:lint test:unit",
     "test:eslint": "eslint 'src/**' --color --fix",
-    "test:lint": "run-s test:stylelint test:eslint",
+    "test:lint": "run-s test:prettier test:stylelint test:eslint",
+    "test:prettier": "prettier --write src/**/*.{js,jsx}",
     "test:stylelint": "stylelint 'src/**' --color --fix",
-    "test:unit": ""
+    "test:unit": "jest"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "gatsby": "^2.13.36",
     "gatsby-image": "^2.2.6",
     "gatsby-plugin-manifest": "^2.2.4",
