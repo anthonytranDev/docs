@@ -10,7 +10,7 @@ context('Network Requests', () => {
   it('cy.server() - control behavior of network requests and responses', () => {
     // https://on.cypress.io/server
 
-    cy.server().should((server) => {
+    cy.server().should(server => {
       // the default options on server
       // you can override any of these options
       expect(server.delay).to.eq(0)
@@ -47,22 +47,25 @@ context('Network Requests', () => {
 
   it('cy.request() - make an XHR request', () => {
     // https://on.cypress.io/request
-    cy.request('https://jsonplaceholder.cypress.io/comments')
-      .should((response) => {
+    cy.request('https://jsonplaceholder.cypress.io/comments').should(
+      response => {
         expect(response.status).to.eq(200)
         expect(response.body).to.have.length(500)
         expect(response).to.have.property('headers')
         expect(response).to.have.property('duration')
-      })
+      },
+    )
   })
 
-
   it('cy.request() - verify response using BDD syntax', () => {
-    cy.request('https://jsonplaceholder.cypress.io/comments')
-    .then((response) => {
+    cy.request('https://jsonplaceholder.cypress.io/comments').then(response => {
       // https://on.cypress.io/assertions
-      expect(response).property('status').to.equal(200)
-      expect(response).property('body').to.have.length(500)
+      expect(response)
+        .property('status')
+        .to.equal(200)
+      expect(response)
+        .property('body')
+        .to.have.length(500)
       expect(response).to.include.keys('headers', 'duration')
     })
   })
@@ -77,40 +80,49 @@ context('Network Requests', () => {
         id: 3,
       },
     })
-    .its('body')
-    .should('be.an', 'array')
-    .and('have.length', 1)
-    .its('0') // yields first element of the array
-    .should('contain', {
-      postId: 1,
-      id: 3,
-    })
+      .its('body')
+      .should('be.an', 'array')
+      .and('have.length', 1)
+      .its('0') // yields first element of the array
+      .should('contain', {
+        postId: 1,
+        id: 3,
+      })
   })
 
   it('cy.request() - pass result to the second request', () => {
     // first, let's find out the userId of the first user we have
     cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')
       .its('body.0') // yields the first element of the returned list
-      .then((user) => {
-        expect(user).property('id').to.be.a('number')
+      .then(user => {
+        expect(user)
+          .property('id')
+          .to.be.a('number')
         // make a new post on behalf of the user
         cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {
           userId: user.id,
           title: 'Cypress Test Runner',
-          body: 'Fast, easy and reliable testing for anything that runs in a browser.',
+          body:
+            'Fast, easy and reliable testing for anything that runs in a browser.',
         })
       })
       // note that the value here is the returned value of the 2nd request
       // which is the new post object
-      .then((response) => {
-        expect(response).property('status').to.equal(201) // new entity created
-        expect(response).property('body').to.contain({
-          id: 101, // there are already 100 posts, so new entity gets id 101
-          title: 'Cypress Test Runner',
-        })
+      .then(response => {
+        expect(response)
+          .property('status')
+          .to.equal(201) // new entity created
+        expect(response)
+          .property('body')
+          .to.contain({
+            id: 101, // there are already 100 posts, so new entity gets id 101
+            title: 'Cypress Test Runner',
+          })
         // we don't know the user id here - since it was in above closure
         // so in this test just confirm that the property is there
-        expect(response.body).property('userId').to.be.a('number')
+        expect(response.body)
+          .property('userId')
+          .to.be.a('number')
       })
   })
 
@@ -119,7 +131,7 @@ context('Network Requests', () => {
     cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')
       .its('body.0') // yields the first element of the returned list
       .as('user') // saves the object in the test context
-      .then(function () {
+      .then(function() {
         // NOTE 👀
         //  By the time this callback runs the "as('user')" command
         //  has saved the user object in the test context.
@@ -129,15 +141,19 @@ context('Network Requests', () => {
         cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {
           userId: this.user.id,
           title: 'Cypress Test Runner',
-          body: 'Fast, easy and reliable testing for anything that runs in a browser.',
+          body:
+            'Fast, easy and reliable testing for anything that runs in a browser.',
         })
-        .its('body').as('post') // save the new post from the response
+          .its('body')
+          .as('post') // save the new post from the response
       })
-      .then(function () {
+      .then(function() {
         // When this callback runs, both "cy.request" API commands have finished
         // and the test context has "user" and "post" objects set.
         // Let's verify them.
-        expect(this.post, 'post has the right user id').property('userId').to.equal(this.user.id)
+        expect(this.post, 'post has the right user id')
+          .property('userId')
+          .to.equal(this.user.id)
       })
   })
 
@@ -156,7 +172,9 @@ context('Network Requests', () => {
     cy.get('.network-btn').click()
 
     // https://on.cypress.io/wait
-    cy.wait('@getComment').its('status').should('eq', 200)
+    cy.wait('@getComment')
+      .its('status')
+      .should('eq', 200)
 
     // Listen to POST to comments
     cy.route('POST', '/comments').as('postComment')
@@ -167,10 +185,13 @@ context('Network Requests', () => {
     cy.wait('@postComment')
 
     // get the route
-    cy.get('@postComment').should((xhr) => {
+    cy.get('@postComment').should(xhr => {
       expect(xhr.requestBody).to.include('email')
       expect(xhr.requestHeaders).to.have.property('Content-Type')
-      expect(xhr.responseBody).to.have.property('name', 'Using POST in cy.route()')
+      expect(xhr.responseBody).to.have.property(
+        'name',
+        'Using POST in cy.route()',
+      )
     })
 
     // Stub a response to PUT comments/ ****
