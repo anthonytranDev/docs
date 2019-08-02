@@ -1,7 +1,8 @@
 {
   "hooks": {
+    "pre-commit": "lint-staged",
     "commit-msg": "npm run commit -- -E HUSKY_GIT_PARAMS",
-    "pre-push": "npm run postinstall",
-    "post-merge": "npm run postinstall"
+    "pre-push": "npm test:unit && npm build",
+    "post-merge": "npm test && npm build"
   },
 }
