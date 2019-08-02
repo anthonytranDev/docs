@@ -12,6 +12,8 @@ import { useStaticQuery, graphql } from 'gatsby'
 import Header from './Header'
 import '../scss/main.scss'
 
+const gatsby: string = 'gatsby'
+
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -39,7 +41,7 @@ const Layout = ({ children }) => {
           ©{new Date().getFullYear()}, Built with
           {` `}
           <a className="big-title" href="https://www.gatsbyjs.org">
-            Gatsby
+            {gatsby}
           </a>
         </footer>
       </div>
