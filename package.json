@@ -10,8 +10,10 @@
     "test:eslint": "eslint 'src/**' --color --fix",
     "test:lint": "run-s test:prettier test:stylelint test:eslint",
     "test:prettier": "prettier --write src/**/*.{js,jsx}",
-    "test:stylelint": "stylelint 'src/**' --syntax --color --fix",
-    "test:unit": "jest"
+    "test:stylelint": "stylelint 'src/**/*.scss' --syntax=scss --color --fix",
+    "test:unit": "jest",
+    "test:e2e": "start-server-and-test develop 8000 test:cypress",
+    "test:cypress": "cypress open"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -39,8 +41,10 @@
     "babel-jest": "^24.8.0",
     "babel-preset-gatsby": "^0.2.8",
     "console-success": "0.0.3",
+    "cypress": "^3.4.1",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-cypress": "^2.6.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
     "gatsby-plugin-eslint": "^2.0.5",
@@ -54,6 +58,7 @@
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6",
     "signale": "^1.4.0",
+    "start-server-and-test": "^1.9.1",
     "stylelint": "^10.1.0",
     "stylelint-prettier": "^1.1.1",
     "yargs": "^13.3.0"

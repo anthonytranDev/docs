@@ -6,8 +6,10 @@
     "import/no-extraneous-dependencies": 0,
     "react/jsx-filename-extension": 0
   },
+  "plugins": ["cypress"],
   "extends": ["eslint:recommended", "airbnb", "prettier"],
   "env": {
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   }
 }

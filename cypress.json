@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:8000/",
+  "video": false,
+  "videoUploadOnPasses": false,
+  "chromeWebSecurity": false
+}
